@@ -22,6 +22,11 @@ output "control_plane_service_account_project" {
   value = module.control_plane_service_account_project
 }
 
+
 output "fleet_project" {
   value = module.fleet_project
+}
+
+output "peers" {
+  value = google_compute_external_vpn_gateway.peer
 }
