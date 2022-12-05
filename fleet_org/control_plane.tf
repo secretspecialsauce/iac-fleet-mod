@@ -29,7 +29,7 @@ module "control_plane_kms_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-kms-proj"
+  name              = "${local.project_prefix}kms-prj"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_security.name
@@ -45,7 +45,7 @@ module "control_plane_secret_manager_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-secret-manager-proj"
+  name              = "${local.project_prefix}secrets"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_security.name
@@ -60,15 +60,13 @@ module "control_plane_service_account_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-service-account-proj"
+  name              = "${local.project_prefix}svc-accts"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_security.name
   billing_account   = var.billing_account_id
 
-  activate_apis = [
-    "cloudbilling.googleapis.com",
-  ]
+  activate_apis = local.edge_enable_services
 }
 
 // Enterprise Networking Projects
@@ -76,7 +74,7 @@ module "control_plane_networking_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-networking-proj"
+  name              = "${local.project_prefix}network"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_network.name
@@ -92,7 +90,7 @@ module "control_plane_logs_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-logs-proj"
+  name              = "${local.project_prefix}logs"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_observability.name
@@ -107,7 +105,7 @@ module "control_plane_monitoring_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
-  name              = "ctl-monitoring-proj"
+  name              = "${local.project_prefix}monitoring"
   random_project_id = true
   org_id            = var.org_id
   folder_id         = google_folder.fleet_control_plane_observability.name
