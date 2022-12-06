@@ -3,8 +3,8 @@ resource "google_service_account" "default" {
 
   project = var.gsa_project_id
 
-  account_id = each.key
-  name       = each.value.description
+  account_id   = each.key
+  display_name = each.value.description
 }
 
 resource "google_project_iam_member" "default" {
