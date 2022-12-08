@@ -3,7 +3,7 @@ module "vpc" {
   version = "~> 5.1.0"
 
   project_id   = module.control_plane_networking_project.project_id
-  network_name = "${var.fleet_name}-fleet-vpc"
+  network_name = "fleet"
   routing_mode = "REGIONAL"
 
   delete_default_internet_gateway_routes = true
@@ -14,7 +14,7 @@ module "vpc" {
 
 # cloud router supporting the fleet internal VPN gateway
 resource "google_compute_router" "fleet-router" {
-  name    = "edge-fleet-${var.fleet_subnet.subnet_region}"
+  name    = "fleet-vpn-${var.fleet_subnet.subnet_region}"
   region  = var.fleet_subnet.subnet_region
   network = module.vpc.network_id
   project = module.control_plane_networking_project.project_id
@@ -27,14 +27,14 @@ resource "google_compute_router" "fleet-router" {
 # creates the internal VPN gateway
 resource "google_compute_ha_vpn_gateway" "ha_gateway" {
   project = module.control_plane_networking_project.project_id
-  name    = "fleet-gw-${var.vpn_region}"
-  region  = var.vpn_region
+  name    = "fleet-gw-${var.fleet_vpn_region}"
+  region  = var.fleet_vpn_region
   network = module.vpc.network_id
 }
 
 # creates external VPN gateway w/ an interface for each peer IP
 resource "google_compute_external_vpn_gateway" "peer" {
-  for_each = var.vpn_peers
+  for_each = var.fleet_vpn_peer_config
 
   project         = module.control_plane_networking_project.project_id
   name            = each.key
@@ -50,30 +50,32 @@ resource "google_compute_external_vpn_gateway" "peer" {
   }
 }
 
-# creates and attaches tunnels for each
+# creates and attaches tunnels for each cluster
 module "tunnels" {
   source = "./modules/tunnels"
 
-  for_each = var.vpn_peers
+  for_each = var.fleet_vpn_peer_config
 
   cluster_name  = each.key
   project_id    = module.control_plane_networking_project.project_id
-  region        = var.vpn_region
+  region        = var.fleet_vpn_region
   router        = google_compute_router.fleet-router.id
   vpn_gw        = google_compute_ha_vpn_gateway.ha_gateway.id
   peer_gw       = google_compute_external_vpn_gateway.peer[each.key].id
   shared_secret = each.value.shared_secret
 }
 
+
+# creates router interfaces and bgp peers, one each per tunnel
 module "bgp" {
   source = "./modules/bgp"
 
-  for_each = var.vpn_peers
+  for_each = var.fleet_vpn_peer_config
 
   cluster_name = each.key
   project_id   = module.control_plane_networking_project.project_id
-  region       = var.vpn_region
+  region       = var.fleet_vpn_region
   router       = google_compute_router.fleet-router.name
   tunnels      = module.tunnels[each.key]
-  router_ips   = each.value.router_ips
+  router_ifs   = each.value.router_ips
 }

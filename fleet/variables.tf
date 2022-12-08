@@ -35,7 +35,7 @@ variable "fleet_subnet" {
   }
 }
 
-variable "vpn_region" {
+variable "fleet_vpn_region" {
   type    = string
   default = "us-central1"
 }
@@ -45,7 +45,7 @@ variable "fleet_vpn_router_bgp_asn" {
   default = "64519"
 }
 
-variable "vpn_peers" {
+variable "fleet_vpn_peer_config" {
   description = "VPN peers are configurations used by this module enabling an Anthos cluster to attach to an HA VPN gateway"
   default = {
     "cluster0" = {
@@ -57,10 +57,12 @@ variable "vpn_peers" {
         interface1 = {
           ip_range = "169.254.0.1/30"
           peer_ip  = "169.254.0.2"
+          peer_asn = "64515"
         }
         interface2 = {
           ip_range = "169.254.1.1/30"
           peer_ip  = "169.254.1.2"
+          peer_asn = "64515"
         }
       }
     }
@@ -71,10 +73,12 @@ variable "vpn_peers" {
         interface1 = {
           ip_range = "169.254.2.1/30"
           peer_ip  = "169.254.2.2"
+          peer_asn = "64515"
         }
         interface2 = {
           ip_range = "169.254.3.1/30"
           peer_ip  = "169.254.3.2"
+          peer_asn = "64515"
         }
       }
     }
