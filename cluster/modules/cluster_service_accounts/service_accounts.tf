@@ -9,8 +9,8 @@ resource "google_service_account" "default" {
 
 resource "google_project_iam_member" "default" {
   for_each = toset(flatten([
-    for k, v in local.service_accounts : [
-      for role in v.roles : "${k}=>${role}"
+    for gsa, gsa_cfg in local.service_accounts : [
+      for role in gsa_cfg.roles : "${gsa}=>${role}=>${gsa_cfg.project_id}"
     ]
   ]))
 

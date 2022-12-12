@@ -6,31 +6,41 @@ terraform {
   }
 }
 
+variable "gsa_gcr_agent_project" {}
+variable "gsa_abm_gke_connect_agent_project" {}
+
+variable "gsa_abm_gke_register_agent_project" {
+  default = ""
+}
 locals {
   service_accounts = {
     "abm-gcr-agent-${var.cluster_name}" = {
       description : "ABM GCR Agent Account",
       roles : [
         "roles/storage.objectViewer"
-      ]
+      ],
+      project_id: var.gsa_gcr_agent_project
     },
     "abm-gke-connect-agent-${var.cluster_name}" = {
       description : "ABM GKE Connect Agent Service Account",
       roles : [
         "roles/gkehub.connect"
-      ]
+      ],
+      project_id: var.gsa_abm_gke_connect_agent_project
     },
     "abm-gke-register-agent-${var.cluster_name}" = {
       description : "ABM GKE Connect Register Account",
       roles : [
         "roles/gkehub.admin"
-      ]
+      ],
+      project_id: var.gsa_abm_gke_register_agent_project
     },
     "acm-monitoring-agent-${var.cluster_name}" = {
       description : "ACM Monitoring Account",
       roles : [
         "roles/monitoring.metricWriter"
-      ]
+      ],
+      project_id: var.gsa_
     },
     "abm-ops-agent-${var.cluster_name}" = {
       description : "ABM Cloud Operations Service Account",
