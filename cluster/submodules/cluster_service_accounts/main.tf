@@ -69,13 +69,6 @@ locals {
         "roles/gkehub.viewer"
       ]
       project_id : var.gsa_gateway_connect_agent_iam_project
-    }
-    "src-repo-${var.cluster_name}" = {
-      description : "Agent used for GSR",
-      roles : [
-        "roles/source.reader"
-      ],
-      project_id : var.gsa_source_repo_agent_iam_project
     },
     "cdi-import-${var.cluster_name}" = {
       description : "Agent used for CDI image access",

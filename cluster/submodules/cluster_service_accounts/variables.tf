@@ -7,6 +7,11 @@ variable "gsa_project_id" {
   description = "project in which to create service accounts"
 }
 
+variable "secret_project_id" {
+  type        = string
+  description = "project in which to create secrets"
+}
+
 variable "gsa_gcr_agent_iam_project" {
   type        = string
   description = "project in which to create IAM bindings for the named service account"
@@ -43,11 +48,6 @@ variable "gsa_sds_backup_agent_iam_project" {
 }
 
 variable "gsa_gateway_connect_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_source_repo_agent_iam_project" {
   type        = string
   description = "project in which to create IAM bindings for the named service account"
 }
