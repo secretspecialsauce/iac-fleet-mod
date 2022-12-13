@@ -41,7 +41,7 @@ resource "google_service_account" "abm-gcr" {
 resource "google_project_iam_member" "abm-gcr" {
   for_each = toset(local.service_accounts["abm-gcr-${var.cluster_name}"].roles)
 
-  member  = google_service_account.abm-gcr.email
+  member  = "serviceAccount:${google_service_account.abm-gcr.email}"
   role    = each.value
   project = local.service_accounts["abm-gcr-${var.cluster_name}"].project_id
 }
@@ -59,7 +59,7 @@ resource "google_service_account" "abm-gke-con" {
 resource "google_project_iam_member" "abm-gke-con" {
   for_each = toset(local.service_accounts["abm-gke-con-${var.cluster_name}"].roles)
 
-  member  = google_service_account.abm-gke-con.email
+  member  = "serviceAccount:${google_service_account.abm-gke-con.email}"
   role    = each.value
   project = local.service_accounts["abm-gke-con-${var.cluster_name}"].project_id
 }
@@ -77,7 +77,7 @@ resource "google_service_account" "abm-gke-reg" {
 resource "google_project_iam_member" "abm-gke-reg" {
   for_each = toset(local.service_accounts["abm-gke-reg-${var.cluster_name}"].roles)
 
-  member  = google_service_account.abm-gke-reg.email
+  member  = "serviceAccount:${google_service_account.abm-gke-reg.email}"
   role    = each.value
   project = local.service_accounts["abm-gke-reg-${var.cluster_name}"].project_id
 }
@@ -95,7 +95,7 @@ resource "google_service_account" "acm-mon" {
 resource "google_project_iam_member" "acm-mon" {
   for_each = toset(local.service_accounts["acm-mon-${var.cluster_name}"].roles)
 
-  member  = google_service_account.acm-mon.email
+  member  = "serviceAccount:${google_service_account.acm-mon.email}"
   role    = each.value
   project = local.service_accounts["acm-mon-${var.cluster_name}"].project_id
 }
@@ -113,7 +113,7 @@ resource "google_service_account" "abm-ops" {
 resource "google_project_iam_member" "abm-ops" {
   for_each = toset(local.service_accounts["abm-ops-${var.cluster_name}"].roles)
 
-  member  = google_service_account.abm-ops.email
+  member  = "serviceAccount:${google_service_account.abm-ops.email}"
   role    = each.value
   project = local.service_accounts["abm-ops-${var.cluster_name}"].project_id
 }
@@ -131,7 +131,7 @@ resource "google_service_account" "es-k8s" {
 resource "google_project_iam_member" "es-k8s" {
   for_each = toset(local.service_accounts["es-k8s-${var.cluster_name}"].roles)
 
-  member  = google_service_account.es-k8s.email
+  member  = "serviceAccount:${google_service_account.es-k8s.email}"
   role    = each.value
   project = local.service_accounts["es-k8s-${var.cluster_name}"].project_id
 }
@@ -149,7 +149,7 @@ resource "google_service_account" "sds-backup" {
 resource "google_project_iam_member" "sds-backup" {
   for_each = toset(local.service_accounts["sds-backup-${var.cluster_name}"].roles)
 
-  member  = google_service_account.sds-backup.email
+  member  = "serviceAccount:${google_service_account.sds-backup.email}"
   role    = each.value
   project = local.service_accounts["sds-backup-${var.cluster_name}"].project_id
 }
@@ -167,7 +167,7 @@ resource "google_service_account" "gtw-con" {
 resource "google_project_iam_member" "gtw-con" {
   for_each = toset(local.service_accounts["gtw-con-${var.cluster_name}"].roles)
 
-  member  = google_service_account.gtw-con.email
+  member  = "serviceAccount:${google_service_account.gtw-con.email}"
   role    = each.value
   project = local.service_accounts["gtw-con-${var.cluster_name}"].project_id
 }
@@ -185,7 +185,7 @@ resource "google_service_account" "src-repo" {
 resource "google_project_iam_member" "src-repo" {
   for_each = toset(local.service_accounts["src-repo-${var.cluster_name}"].roles)
 
-  member  = google_service_account.src-repo.email
+  member  = "serviceAccount:${google_service_account.src-repo.email}"
   role    = each.value
   project = local.service_accounts["src-repo-${var.cluster_name}"].project_id
 }
@@ -203,7 +203,7 @@ resource "google_service_account" "cdi-import" {
 resource "google_project_iam_member" "cdi-import" {
   for_each = toset(local.service_accounts["cdi-import-${var.cluster_name}"].roles)
 
-  member  = google_service_account.cdi-import.email
+  member  = "serviceAccount:${google_service_account.cdi-import.email}"
   role    = each.value
   project = local.service_accounts["cdi-import-${var.cluster_name}"].project_id
 }
@@ -221,7 +221,7 @@ resource "google_service_account" "storage" {
 resource "google_project_iam_member" "storage" {
   for_each = toset(local.service_accounts["storage-${var.cluster_name}"].roles)
 
-  member  = google_service_account.storage.email
+  member  = "serviceAccount:${google_service_account.storage.email}"
   role    = each.value
   project = local.service_accounts["storage-${var.cluster_name}"].project_id
 }
