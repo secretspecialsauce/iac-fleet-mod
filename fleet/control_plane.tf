@@ -23,6 +23,11 @@ resource "google_folder" "fleet_control_plane_observability" {
   parent       = google_folder.fleet_control_plane.name
 }
 
+resource "google_folder" "fleet_control_plane_devops" {
+  display_name = "devops"
+  parent       = google_folder.fleet_control_plane.name
+}
+
 // below projects nets under their associated control plane folder
 // Enterprise Security Projects
 module "control_plane_kms_project" {
@@ -53,6 +58,7 @@ module "control_plane_secret_manager_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
+    "secretmanager.googleapis.com"
   ]
 }
 
@@ -82,6 +88,7 @@ module "control_plane_networking_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
+    "compute.googleapis.com"
   ]
 }
 
@@ -98,6 +105,7 @@ module "control_plane_logs_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
+    "logging.googleapis.com"
   ]
 }
 
@@ -113,5 +121,22 @@ module "control_plane_monitoring_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
+    "monitoring.googleapis.com"
+  ]
+}
+
+module "control_plane_source_project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 10.1"
+
+  name              = "${local.project_prefix}source"
+  random_project_id = true
+  org_id            = var.org_id
+  folder_id         = google_folder.fleet_control_plane_devops.name
+  billing_account   = var.billing_account_id
+
+  activate_apis = [
+    "cloudbilling.googleapis.com",
+    "sourcerepo.googleapis.com"
   ]
 }

@@ -6,43 +6,37 @@ terraform {
   }
 }
 
-variable "gsa_gcr_agent_project" {}
-variable "gsa_abm_gke_connect_agent_project" {}
-
-variable "gsa_abm_gke_register_agent_project" {
-  default = ""
-}
 locals {
   service_accounts = {
-    "abm-gcr-agent-${var.cluster_name}" = {
+    "abm-gcr-${var.cluster_name}" = {
       description : "ABM GCR Agent Account",
       roles : [
         "roles/storage.objectViewer"
       ],
-      project_id: var.gsa_gcr_agent_project
+      project_id : var.gsa_gcr_agent_iam_project
     },
-    "abm-gke-connect-agent-${var.cluster_name}" = {
+    "abm-gke-con-${var.cluster_name}" = {
       description : "ABM GKE Connect Agent Service Account",
       roles : [
         "roles/gkehub.connect"
       ],
-      project_id: var.gsa_abm_gke_connect_agent_project
+      project_id : var.gsa_abm_gke_connect_agent_iam_project
     },
-    "abm-gke-register-agent-${var.cluster_name}" = {
+    "abm-gke-reg-${var.cluster_name}" = {
       description : "ABM GKE Connect Register Account",
       roles : [
         "roles/gkehub.admin"
       ],
-      project_id: var.gsa_abm_gke_register_agent_project
+      project_id : var.gsa_abm_gke_register_agent_iam_project
     },
-    "acm-monitoring-agent-${var.cluster_name}" = {
+    "acm-mon-${var.cluster_name}" = {
       description : "ACM Monitoring Account",
       roles : [
         "roles/monitoring.metricWriter"
       ],
-      project_id: var.gsa_
+      project_id : var.gsa_acm_monitoring_agent_iam_project
     },
-    "abm-ops-agent-${var.cluster_name}" = {
+    "abm-ops-${var.cluster_name}" = {
       description : "ABM Cloud Operations Service Account",
       roles : [
         "roles/logging.logWriter",
@@ -50,38 +44,52 @@ locals {
         "roles/stackdriver.resourceMetadata.writer",
         "roles/monitoring.dashboardEditor",
         "roles/opsconfigmonitoring.resourceMetadata.writer"
-      ]
+      ],
+      project_id : var.gsa_abm_ops_agent_iam_project
     },
-    "external-secrets-k8s-${var.cluster_name}" = {
+    "es-k8s-${var.cluster_name}" = {
       description : "External Secrets Service Account",
       roles : [
         "roles/secretmanager.secretAccessor",
         "roles/secretmanager.viewer"
-      ]
+      ],
+      project_id : var.gsa_external_secrets_iam_project
     },
-    "longhorn-cloud-storage-${var.cluster_name}" = {
-      description : "Longhorn taking volume backups on cloud storage ",
+    "sds-backup-${var.cluster_name}" = {
+      description : "SDS agent taking volume backups on cloud storage",
       roles : [
         "roles/storage.objectAdmin"
-      ]
+      ],
+      project_id : var.gsa_sds_backup_agent_iam_project
     },
-    "source-repo-agent-${var.cluster_name}" = {
+    "gtw-con-${var.cluster_name}" = {
+      description : "Agent used for Gateway Connect",
+      roles : [
+        "roles/gkehub.gatewayAdmin",
+        "roles/gkehub.viewer"
+      ]
+      project_id : var.gsa_gateway_connect_agent_iam_project
+    }
+    "src-repo-${var.cluster_name}" = {
       description : "Agent used for GSR",
       roles : [
         "roles/source.reader"
-      ]
+      ],
+      project_id : var.gsa_source_repo_agent_iam_project
     },
-    "cdi-import-agent-${var.cluster_name}" = {
+    "cdi-import-${var.cluster_name}" = {
       description : "Agent used for CDI image access",
       roles : [
         "roles/storage.objectViewer"
-      ]
+      ],
+      project_id : var.gsa_cdi_import_agent_iam_project
     },
-    "storage-agent-${var.cluster_name}" = {
+    "storage-${var.cluster_name}" = {
       description : "Agent used for Snapshot Cloud Storage",
       roles : [
         "roles/storage.admin"
-      ]
+      ],
+      project_id : var.gsa_storage_agent_iam_project
     }
   }
 }
