@@ -16,3 +16,8 @@ variable "bucket_service_accounts" {
   type        = list(string)
   description = "service accounts to which access is granted in the form of 'serviceAccount:$gsaEmail'"
 }
+
+variable "prefix" {
+  type        = string
+  description = "bucket prefix"
+}

@@ -34,4 +34,5 @@ module "sds_bucket" {
   bucket_location         = "us-central1"
   project_id              = var.sds_project_id
   bucket_service_accounts = concat(["serviceAccount:${module.service_accounts.sds_gsa.email}"], var.sds_bucket_service_accounts)
+  prefix                  = var.sds_bucket_prefix
 }

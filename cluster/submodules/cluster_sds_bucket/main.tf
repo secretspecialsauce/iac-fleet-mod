@@ -8,7 +8,7 @@ terraform {
 
 resource "google_storage_bucket" "default" {
   project       = var.project_id
-  name          = "fleet-sds-bucket"
+  name          = "${var.prefix}-fleet-sds-bucket-${var.cluster_name}"
   location      = var.bucket_location
   force_destroy = false
 

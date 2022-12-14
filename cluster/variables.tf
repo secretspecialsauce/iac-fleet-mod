@@ -68,6 +68,11 @@ variable "gsa_storage_agent_iam_project" {
 #  description = "project in which to create IAM bindings for the named service account"
 #}
 
+variable "sds_bucket_prefix" {
+  type        = string
+  description = "bucket prefix"
+}
+
 variable "sds_bucket_location" {
   type        = string
   description = "location in which to create SDS bucket (eg. region (i.e. us-central1) or multi-region (i.e. US)"
