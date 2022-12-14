@@ -6,8 +6,25 @@ terraform {
   }
 }
 
+
 locals {
   service_accounts = {
+    # TODO add target machine when ready
+    #    "target-machine-gsa" = {
+    #      description : "Cluster node service account used during",
+    #      roles: [
+    #        "roles/editor",  # TODO remove
+    #        "roles/cloudkms.cryptoKeyEncrypterDecrypter",  # TODO scope this access to KMS project
+    #        "roles/gkehub.gatewayAdmin", # TODO scope this access to fleet project
+    #        "roles/gkehub.viewer",  # TODO scope this access to fleet project
+    #        "roles/resourcemanager.projectIamAdmin",  # TODO remove
+    #        "roles/secretmanager.admin",  # TODO this access to fleet secrets project
+    #        "roles/secretmanager.secretAccessor",  # TODO this access to fleet secrets project
+    #        "roles/storage.objectViewer",  # TODO scope to artifacts/images project
+    #        "roles/iam.serviceAccountAdmin",  # TODO remove
+    #      ],
+    #      project_id: var.gsa_target_machine_iam_project
+    #    }
     "abm-gcr-${var.cluster_name}" = {
       description : "ABM GCR Agent Account",
       roles : [

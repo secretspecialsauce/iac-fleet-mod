@@ -22,6 +22,8 @@ module "service_accounts" {
   gsa_gateway_connect_agent_iam_project  = var.gsa_gateway_connect_agent_iam_project
   gsa_cdi_import_agent_iam_project       = var.gsa_cdi_import_agent_iam_project
   gsa_storage_agent_iam_project          = var.gsa_storage_agent_iam_project
+  # TODO add target machine when ready
+  # gsa_target_machine_iam_project         = var.gsa_target_machine_iam_project
 }
 
 
