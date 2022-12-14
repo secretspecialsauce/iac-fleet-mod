@@ -37,6 +37,7 @@ module "control_plane_kms_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
+    "cloudkms.googleapis.com"
   ]
 }
 
