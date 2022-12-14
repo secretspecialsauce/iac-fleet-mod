@@ -61,3 +61,9 @@ variable "gsa_storage_agent_iam_project" {
   type        = string
   description = "project in which to create IAM bindings for the named service account"
 }
+
+# TODO add target machine when ready
+#variable "gsa_target_machine_iam_project" {
+#  type        = string
+#  description = "project in which to create IAM bindings for the named service account"
+#}

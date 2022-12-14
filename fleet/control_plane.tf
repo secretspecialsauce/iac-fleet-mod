@@ -12,8 +12,8 @@ resource "google_folder" "fleet_control_plane_security" {
 }
 
 // fleet control plane folder for network projects
-resource "google_folder" "fleet_control_plane_network" {
-  display_name = "network"
+resource "google_folder" "fleet_control_plane_platform" {
+  display_name = "platform"
   parent       = google_folder.fleet_control_plane.name
 }
 
@@ -78,7 +78,7 @@ module "control_plane_networking_project" {
   name              = "${local.project_prefix}network"
   random_project_id = true
   org_id            = var.org_id
-  folder_id         = google_folder.fleet_control_plane_network.name
+  folder_id         = google_folder.fleet_control_plane_platform.name
   billing_account   = var.billing_account_id
 
   activate_apis = [
@@ -117,5 +117,21 @@ module "control_plane_monitoring_project" {
   activate_apis = [
     "cloudbilling.googleapis.com",
     "monitoring.googleapis.com"
+  ]
+}
+
+module "control_plane_sds_project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 10.1"
+
+  name              = "${local.project_prefix}sds"
+  random_project_id = true
+  org_id            = var.org_id
+  folder_id         = google_folder.fleet_control_plane_platform.name
+  billing_account   = var.billing_account_id
+
+  activate_apis = [
+    "cloudbilling.googleapis.com",
+    "storage.googleapis.com"
   ]
 }

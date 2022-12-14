@@ -23,3 +23,13 @@ module "service_accounts" {
   gsa_cdi_import_agent_iam_project       = var.gsa_cdi_import_agent_iam_project
   gsa_storage_agent_iam_project          = var.gsa_storage_agent_iam_project
 }
+
+
+module "sds_bucket" {
+  source = "./submodules/cluster_sds_bucket"
+
+  cluster_name            = var.cluster_name
+  bucket_location         = "us-central1"
+  project_id              = var.sds_project_id
+  bucket_service_accounts = concat(["serviceAccount:${module.service_accounts.sds_gsa.email}"], var.sds_bucket_service_accounts)
+}

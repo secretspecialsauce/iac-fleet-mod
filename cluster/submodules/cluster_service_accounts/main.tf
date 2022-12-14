@@ -57,9 +57,7 @@ locals {
     },
     "sds-backup-${var.cluster_name}" = {
       description : "SDS agent taking volume backups on cloud storage",
-      roles : [
-        "roles/storage.objectAdmin"
-      ],
+      roles : [],
       project_id : var.gsa_sds_backup_agent_iam_project
     },
     "gtw-con-${var.cluster_name}" = {
