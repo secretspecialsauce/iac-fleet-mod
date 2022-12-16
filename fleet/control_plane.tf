@@ -23,26 +23,9 @@ resource "google_folder" "fleet_control_plane_observability" {
   parent       = google_folder.fleet_control_plane.name
 }
 
-// below projects nets under their associated control plane folder
+// below projects nest under their associated control plane folder
 // Enterprise Security Projects
-module "control_plane_kms_project" {
-  source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.1"
-
-  name              = "${local.project_prefix}kms-prj"
-  random_project_id = true
-  org_id            = var.org_id
-  folder_id         = google_folder.fleet_control_plane_security.name
-  billing_account   = var.billing_account_id
-
-  activate_apis = [
-    "cloudbilling.googleapis.com",
-    "cloudkms.googleapis.com"
-  ]
-}
-
-
-module "control_plane_secret_manager_project" {
+module "control_plane_secrets_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
 
@@ -54,7 +37,8 @@ module "control_plane_secret_manager_project" {
 
   activate_apis = [
     "cloudbilling.googleapis.com",
-    "secretmanager.googleapis.com"
+    "secretmanager.googleapis.com",
+    "cloudkms.googleapis.com"
   ]
 }
 
@@ -71,7 +55,24 @@ module "control_plane_service_account_project" {
   activate_apis = local.edge_enable_services
 }
 
-// Enterprise Networking Projects
+
+module "control_plane_observability_project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 10.1"
+
+  name              = "${local.project_prefix}observability"
+  random_project_id = true
+  org_id            = var.org_id
+  folder_id         = google_folder.fleet_control_plane_observability.name
+  billing_account   = var.billing_account_id
+
+  activate_apis = [
+    "cloudbilling.googleapis.com",
+    "monitoring.googleapis.com",
+    "logging.googleapis.com"
+  ]
+}
+
 module "control_plane_networking_project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 10.1"
@@ -85,39 +86,6 @@ module "control_plane_networking_project" {
   activate_apis = [
     "cloudbilling.googleapis.com",
     "compute.googleapis.com"
-  ]
-}
-
-// Observability Projects
-module "control_plane_logs_project" {
-  source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.1"
-
-  name              = "${local.project_prefix}logs"
-  random_project_id = true
-  org_id            = var.org_id
-  folder_id         = google_folder.fleet_control_plane_observability.name
-  billing_account   = var.billing_account_id
-
-  activate_apis = [
-    "cloudbilling.googleapis.com",
-    "logging.googleapis.com"
-  ]
-}
-
-module "control_plane_monitoring_project" {
-  source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.1"
-
-  name              = "${local.project_prefix}monitoring"
-  random_project_id = true
-  org_id            = var.org_id
-  folder_id         = google_folder.fleet_control_plane_observability.name
-  billing_account   = var.billing_account_id
-
-  activate_apis = [
-    "cloudbilling.googleapis.com",
-    "monitoring.googleapis.com"
   ]
 }
 

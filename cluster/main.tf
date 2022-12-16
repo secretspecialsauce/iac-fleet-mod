@@ -26,13 +26,14 @@ module "service_accounts" {
   # gsa_target_machine_iam_project         = var.gsa_target_machine_iam_project
 }
 
-
 module "sds_bucket" {
   source = "./submodules/cluster_sds_bucket"
 
   cluster_name            = var.cluster_name
   bucket_location         = "us-central1"
   project_id              = var.sds_project_id
-  bucket_service_accounts = concat(["serviceAccount:${module.service_accounts.sds_gsa.email}"], var.sds_bucket_service_accounts)
+  bucket_service_account  = module.service_accounts.sds_gsa.email
   prefix                  = var.sds_bucket_prefix
+  service_account_project = var.gsa_project_id
+  secret_project          = var.secret_project_id
 }

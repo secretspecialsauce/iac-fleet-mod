@@ -13,6 +13,7 @@ variable "secret_project_id" {
 }
 
 variable "gsa_gcr_agent_iam_project" {
+  # TODO remove
   type        = string
   description = "project in which to create IAM bindings for the named service account"
 }
@@ -81,10 +82,4 @@ variable "sds_bucket_location" {
 variable "sds_project_id" {
   type        = string
   description = "project in which to create SDS bucket"
-}
-
-variable "sds_bucket_service_accounts" {
-  type        = list(string)
-  description = "service accounts to which access is granted in the form of 'serviceAccount:$gsaEmail'"
-  default     = []
 }
