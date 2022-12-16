@@ -33,6 +33,7 @@ resource "google_storage_hmac_key" "default" {
   project               = var.service_account_project
 }
 
+# Create secret for HMAC key
 resource "google_secret_manager_secret" "hmac" {
   project   = var.secret_project
   secret_id = "sds-backup-${var.cluster_name}"
@@ -42,6 +43,7 @@ resource "google_secret_manager_secret" "hmac" {
   }
 }
 
+# Create secret version with JSON-encoded key for Longhorn
 resource "google_secret_manager_secret_version" "hmac" {
   secret = google_secret_manager_secret.hmac.id
   secret_data = jsonencode({

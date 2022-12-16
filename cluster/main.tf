@@ -26,8 +26,8 @@ module "service_accounts" {
   # gsa_target_machine_iam_project         = var.gsa_target_machine_iam_project
 }
 
-module "sds_bucket" {
-  source = "./submodules/cluster_sds_bucket"
+module "sds_backup" {
+  source = "submodules/cluster_sds_backup"
 
   cluster_name            = var.cluster_name
   bucket_location         = "us-central1"
