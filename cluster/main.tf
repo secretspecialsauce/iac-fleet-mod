@@ -27,7 +27,7 @@ module "service_accounts" {
 }
 
 module "sds_backup" {
-  source = "submodules/cluster_sds_backup"
+  source = "./submodules/cluster_sds_backup"
 
   cluster_name            = var.cluster_name
   bucket_location         = "us-central1"
