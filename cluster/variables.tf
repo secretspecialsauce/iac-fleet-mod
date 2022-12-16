@@ -2,6 +2,10 @@ variable "cluster_name" {
   type = string
 }
 
+variable "fleet_project_id" {
+  type = string
+}
+
 variable "gsa_project_id" {
   type        = string
   description = "project in which to create service accounts"
@@ -82,4 +86,9 @@ variable "sds_bucket_location" {
 variable "sds_project_id" {
   type        = string
   description = "project in which to create SDS bucket"
+}
+
+variable "snapshot_bucket_location" {
+  type        = string
+  description = "location in which to create SDS bucket (eg. region (i.e. us-central1) or multi-region (i.e. US)"
 }
