@@ -129,9 +129,9 @@ resource "google_service_account_key" "default" {
 }
 
 resource "google_secret_manager_secret" "default" {
-  for_each = { for k, v in local.service_accounts : k => v if k != "sds-backup-${var.cluster_name}" }
+  for_each = {for k, v in local.service_accounts : k => v if k != "sds-backup-${var.cluster_name}"}
 
-  project   = var.secret_project_id
+  project   = var.secrets_project_id
   secret_id = each.key
 
   replication {
@@ -140,7 +140,7 @@ resource "google_secret_manager_secret" "default" {
 }
 
 resource "google_secret_manager_secret_version" "default" {
-  for_each = { for k, v in local.service_accounts : k => v if k != "sds-backup-${var.cluster_name}" }
+  for_each = {for k, v in local.service_accounts : k => v if k != "sds-backup-${var.cluster_name}"}
 
   secret      = google_secret_manager_secret.default[each.key].id
   secret_data = base64decode(google_service_account_key.default[each.key].private_key)

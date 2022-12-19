@@ -9,21 +9,13 @@ terraform {
 module "service_accounts" {
   source = "./submodules/cluster_service_accounts"
 
-  cluster_name                           = var.cluster_name
-  gsa_project_id                         = var.gsa_project_id
-  secret_project_id                      = var.secret_project_id
-  gsa_gcr_agent_iam_project              = var.gsa_gcr_agent_iam_project
-  gsa_abm_gke_connect_agent_iam_project  = var.gsa_abm_gke_connect_agent_iam_project
-  gsa_abm_gke_register_agent_iam_project = var.gsa_abm_gke_register_agent_iam_project
-  gsa_acm_monitoring_agent_iam_project   = var.gsa_acm_monitoring_agent_iam_project
-  gsa_abm_ops_agent_iam_project          = var.gsa_abm_ops_agent_iam_project
-  gsa_external_secrets_iam_project       = var.gsa_external_secrets_iam_project
-  gsa_sds_backup_agent_iam_project       = var.gsa_sds_backup_agent_iam_project
-  gsa_gateway_connect_agent_iam_project  = var.gsa_gateway_connect_agent_iam_project
-  gsa_cdi_import_agent_iam_project       = var.gsa_cdi_import_agent_iam_project
-  gsa_storage_agent_iam_project          = var.gsa_storage_agent_iam_project
-  # TODO add target machine when ready
-  # gsa_target_machine_iam_project         = var.gsa_target_machine_iam_project
+  cluster_name             = var.cluster_name
+  fleet_project_id         = var.fleet_project_id
+  gsa_project_id           = var.gsa_project_id
+  secrets_project_id       = var.secrets_project_id
+  observability_project_id = var.observability_project_id
+  network_project_id       = var.network_project_id
+  sds_project_id           = var.sds_project_id
 }
 
 module "sds_backup" {
@@ -35,7 +27,7 @@ module "sds_backup" {
   bucket_service_account  = module.service_accounts.sds_gsa.email
   prefix                  = var.sds_bucket_prefix
   service_account_project = var.gsa_project_id
-  secret_project          = var.secret_project_id
+  secret_project          = var.secrets_project_id
 }
 
 # Create snapshot bucket

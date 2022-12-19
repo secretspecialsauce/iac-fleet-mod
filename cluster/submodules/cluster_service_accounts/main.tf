@@ -9,49 +9,33 @@ terraform {
 
 locals {
   service_accounts = {
-    # TODO add target machine when ready
-    #    "target-machine-gsa" = {
-    #      description : "Cluster node service account used during",
-    #      roles: [
-    #        "roles/editor",  # TODO remove
-    #        "roles/cloudkms.cryptoKeyEncrypterDecrypter",  # TODO scope this access to KMS project
-    #        "roles/gkehub.gatewayAdmin", # TODO scope this access to fleet project
-    #        "roles/gkehub.viewer",  # TODO scope this access to fleet project
-    #        "roles/resourcemanager.projectIamAdmin",  # TODO remove
-    #        "roles/secretmanager.admin",  # TODO this access to fleet secrets project
-    #        "roles/secretmanager.secretAccessor",  # TODO this access to fleet secrets project
-    #        "roles/storage.objectViewer",  # TODO scope to artifacts/images project
-    #        "roles/iam.serviceAccountAdmin",  # TODO remove
-    #      ],
-    #      project_id: var.gsa_target_machine_iam_project
-    #    }
     "abm-gcr-${var.cluster_name}" = {
       description : "ABM GCR Agent Account",
       roles : [
         "roles/storage.objectViewer"
       ],
-      project_id : var.gsa_gcr_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "abm-gke-con-${var.cluster_name}" = {
       description : "ABM GKE Connect Agent Service Account",
       roles : [
         "roles/gkehub.connect"
       ],
-      project_id : var.gsa_abm_gke_connect_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "abm-gke-reg-${var.cluster_name}" = {
       description : "ABM GKE Connect Register Account",
       roles : [
         "roles/gkehub.admin"
       ],
-      project_id : var.gsa_abm_gke_register_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "acm-mon-${var.cluster_name}" = {
       description : "ACM Monitoring Account",
       roles : [
         "roles/monitoring.metricWriter"
       ],
-      project_id : var.gsa_acm_monitoring_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "abm-ops-${var.cluster_name}" = {
       description : "ABM Cloud Operations Service Account",
@@ -62,7 +46,7 @@ locals {
         "roles/monitoring.dashboardEditor",
         "roles/opsconfigmonitoring.resourceMetadata.writer"
       ],
-      project_id : var.gsa_abm_ops_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "es-k8s-${var.cluster_name}" = {
       description : "External Secrets Service Account",
@@ -70,12 +54,12 @@ locals {
         "roles/secretmanager.secretAccessor",
         "roles/secretmanager.viewer"
       ],
-      project_id : var.gsa_external_secrets_iam_project
+      project_id : var.secrets_project_id
     },
     "sds-backup-${var.cluster_name}" = {
       description : "SDS agent taking volume backups on cloud storage",
       roles : [],
-      project_id : var.gsa_sds_backup_agent_iam_project
+      project_id : var.sds_project_id
     },
     "gtw-con-${var.cluster_name}" = {
       description : "Agent used for Gateway Connect",
@@ -83,21 +67,21 @@ locals {
         "roles/gkehub.gatewayAdmin",
         "roles/gkehub.viewer"
       ]
-      project_id : var.gsa_gateway_connect_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "cdi-import-${var.cluster_name}" = {
       description : "Agent used for CDI image access",
       roles : [
         "roles/storage.objectViewer"
       ],
-      project_id : var.gsa_cdi_import_agent_iam_project
+      project_id : var.fleet_project_id
     },
     "storage-${var.cluster_name}" = {
       description : "Agent used for Snapshot Cloud Storage",
       roles : [
         "roles/storage.admin"
       ],
-      project_id : var.gsa_storage_agent_iam_project
+      project_id : var.sds_project_id
     }
   }
 }

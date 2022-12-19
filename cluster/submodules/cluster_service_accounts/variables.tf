@@ -2,68 +2,31 @@ variable "cluster_name" {
   type = string
 }
 
+variable "fleet_project_id" {
+  type = string
+}
+
 variable "gsa_project_id" {
   type        = string
-  description = "project in which to create service accounts"
+  description = "project id of named purpose"
 }
 
-variable "secret_project_id" {
+variable "secrets_project_id" {
   type        = string
-  description = "project in which to create secrets"
+  description = "project id of named purpose"
 }
 
-variable "gsa_gcr_agent_iam_project" {
+variable "observability_project_id" {
   type        = string
-  description = "project in which to create IAM bindings for the named service account"
+  description = "project id of named purpose"
 }
 
-variable "gsa_abm_gke_connect_agent_iam_project" {
+variable "network_project_id" {
   type        = string
-  description = "project in which to create IAM bindings for the named service account"
+  description = "project id of named purpose"
 }
 
-variable "gsa_abm_gke_register_agent_iam_project" {
+variable "sds_project_id" {
   type        = string
-  description = "project in which to create IAM bindings for the named service account"
+  description = "project in which to create SDS bucket"
 }
-
-variable "gsa_acm_monitoring_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_abm_ops_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_external_secrets_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_sds_backup_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_gateway_connect_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_cdi_import_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-variable "gsa_storage_agent_iam_project" {
-  type        = string
-  description = "project in which to create IAM bindings for the named service account"
-}
-
-# TODO add target machine when ready
-#variable "gsa_target_machine_iam_project" {
-#  type        = string
-#  description = "project in which to create IAM bindings for the named service account"
-#}
