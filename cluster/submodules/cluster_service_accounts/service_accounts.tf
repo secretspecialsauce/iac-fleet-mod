@@ -33,7 +33,7 @@
 resource "google_service_account" "default" {
   for_each = local.service_accounts
 
-  project = var.gsa_project_id
+  project = each.value.gsa_project_id
 
   account_id   = each.key
   display_name = each.key
@@ -46,7 +46,7 @@ resource "google_project_iam_member" "abm-gcr" {
 
   member  = "serviceAccount:${google_service_account.default["abm-gcr-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["abm-gcr-${var.cluster_name}"].project_id
+  project = local.service_accounts["abm-gcr-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "abm-gke-con" {
@@ -54,7 +54,7 @@ resource "google_project_iam_member" "abm-gke-con" {
 
   member  = "serviceAccount:${google_service_account.default["abm-gke-con-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["abm-gke-con-${var.cluster_name}"].project_id
+  project = local.service_accounts["abm-gke-con-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "abm-gke-reg" {
@@ -62,7 +62,7 @@ resource "google_project_iam_member" "abm-gke-reg" {
 
   member  = "serviceAccount:${google_service_account.default["abm-gke-reg-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["abm-gke-reg-${var.cluster_name}"].project_id
+  project = local.service_accounts["abm-gke-reg-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "acm-mon" {
@@ -70,15 +70,15 @@ resource "google_project_iam_member" "acm-mon" {
 
   member  = "serviceAccount:${google_service_account.default["acm-mon-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["acm-mon-${var.cluster_name}"].project_id
+  project = local.service_accounts["acm-mon-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "abm-ops" {
   for_each = toset(local.service_accounts["abm-ops-${var.cluster_name}"].roles)
 
-  member  = "serviceAccount:${google_service_account.default["abm-gke-reg-${var.cluster_name}"].email}"
+  member  = "serviceAccount:${google_service_account.default["abm-ops-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["abm-ops-${var.cluster_name}"].project_id
+  project = local.service_accounts["abm-ops-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "es-k8s" {
@@ -86,7 +86,7 @@ resource "google_project_iam_member" "es-k8s" {
 
   member  = "serviceAccount:${google_service_account.default["es-k8s-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["es-k8s-${var.cluster_name}"].project_id
+  project = local.service_accounts["es-k8s-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "sds-backup" {
@@ -94,7 +94,7 @@ resource "google_project_iam_member" "sds-backup" {
 
   member  = "serviceAccount:${google_service_account.default["sds-backup-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["sds-backup-${var.cluster_name}"].project_id
+  project = local.service_accounts["sds-backup-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "gtw-con" {
@@ -102,7 +102,7 @@ resource "google_project_iam_member" "gtw-con" {
 
   member  = "serviceAccount:${google_service_account.default["gtw-con-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["gtw-con-${var.cluster_name}"].project_id
+  project = local.service_accounts["gtw-con-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "cdi-import" {
@@ -110,7 +110,7 @@ resource "google_project_iam_member" "cdi-import" {
 
   member  = "serviceAccount:${google_service_account.default["cdi-import-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["cdi-import-${var.cluster_name}"].project_id
+  project = local.service_accounts["cdi-import-${var.cluster_name}"].iam_project_id
 }
 
 resource "google_project_iam_member" "storage" {
@@ -118,7 +118,7 @@ resource "google_project_iam_member" "storage" {
 
   member  = "serviceAccount:${google_service_account.default["storage-${var.cluster_name}"].email}"
   role    = each.value
-  project = local.service_accounts["storage-${var.cluster_name}"].project_id
+  project = local.service_accounts["storage-${var.cluster_name}"].iam_project_id
 }
 ## End IAM for GSAs
 

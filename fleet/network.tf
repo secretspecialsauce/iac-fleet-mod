@@ -52,7 +52,7 @@ resource "google_compute_external_vpn_gateway" "peer" {
 
 # creates and attaches tunnels for each cluster
 module "tunnels" {
-  source = "./modules/tunnels"
+  source = "./submodules/tunnels"
 
   for_each = var.fleet_vpn_peer_config
 
@@ -68,7 +68,7 @@ module "tunnels" {
 
 # creates router interfaces and bgp peers, one each per tunnel
 module "bgp" {
-  source = "./modules/bgp"
+  source = "./submodules/bgp"
 
   for_each = var.fleet_vpn_peer_config
 
