@@ -34,7 +34,7 @@ module "sds_backup" {
 resource "google_storage_bucket" "snapshot" {
   location                    = var.snapshot_bucket_location
   project                     = var.fleet_project_id
-  name                        = "${var.fleet_project_id}-cluster-snapshots"
+  name                        = "${var.fleet_project_id}-cluster-snapshots-${var.cluster_name}"
   force_destroy               = false
   uniform_bucket_level_access = true
 }
