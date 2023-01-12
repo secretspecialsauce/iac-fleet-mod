@@ -9,10 +9,11 @@ terraform {
 locals {
   project_prefix = var.project_prefix == "" ? "" : "${var.project_prefix}-"
   edge_enable_services = [
-    "cloudbilling.googleapis.com",
     "anthos.googleapis.com",
     "anthosaudit.googleapis.com",
+    "anthosconfigmanagement.googleapis.com",
     "anthosgke.googleapis.com",
+    "cloudbilling.googleapis.com",
     "cloudkms.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "connectgateway.googleapis.com",
@@ -28,7 +29,7 @@ locals {
     "serviceusage.googleapis.com",
     "sourcerepo.googleapis.com",
     "stackdriver.googleapis.com",
-    "storage.googleapis.com"
+    "storage.googleapis.com",
   ]
 }
 
