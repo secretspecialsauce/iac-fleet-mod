@@ -29,25 +29,3 @@ module "sds_backup" {
   service_account_project = var.gsa_project_id
   secret_project          = var.secrets_project_id
 }
-
-# Create snapshot bucket
-resource "google_storage_bucket" "snapshot" {
-  location                    = var.snapshot_bucket_location
-  project                     = var.fleet_project_id
-  name                        = "${var.fleet_project_id}-${var.cluster_name}-snapshot"
-  force_destroy               = false
-  uniform_bucket_level_access = true
-}
-
-# placeholder for target machine GSA
-#data "google_iam_policy" "snapshot" {
-#  binding {
-#    role    = "roles/storage.objectAdmin"
-#    members = ["serviceAccount:${var.snapshot_bucket_gsa_email}"]
-#  }
-#}
-#
-#resource "google_storage_bucket_iam_policy" "policy" {
-#  bucket      = google_storage_bucket.snapshot.name
-#  policy_data = data.google_iam_policy.default.policy_data
-#}
