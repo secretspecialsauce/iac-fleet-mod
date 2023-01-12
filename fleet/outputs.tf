@@ -13,10 +13,6 @@ output "control_plane_service_account_project" {
   value = module.control_plane_service_account_project
 }
 
-output "control_plane_sds_project" {
-  value = module.control_plane_sds_project
-}
-
 output "fleet_project" {
   value = module.fleet_project
 }
