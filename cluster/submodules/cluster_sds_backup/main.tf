@@ -8,7 +8,7 @@ terraform {
 
 resource "google_storage_bucket" "default" {
   project       = var.project_id
-  name          = "${var.prefix}-fleet-sds-bucket-${var.cluster_name}"
+  name          = "${var.project_id}-${var.cluster_name}-sds-backup"
   location      = var.bucket_location
   force_destroy = false
 
@@ -36,7 +36,7 @@ resource "google_storage_hmac_key" "default" {
 # Create secret for HMAC key
 resource "google_secret_manager_secret" "hmac" {
   project   = var.secret_project
-  secret_id = "sds-backup-${var.cluster_name}"
+  secret_id = "${var.project_id}-${var.cluster_name}-sds-hmac-secret"
 
   replication {
     automatic = true
